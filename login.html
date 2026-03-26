@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | WASABI.bet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #050709;
+  --panel: rgba(255,255,255,.05);
+  --panel-strong: rgba(255,255,255,.08);
+  --border: rgba(255,255,255,.08);
+  --text: #f6f7f8;
+  --muted: rgba(255,255,255,.68);
+  --lime: #b7ff2a;
+  --lime-2: #8ae600;
+  --shadow: 0 18px 60px rgba(0,0,0,.35);
+  --radius: 24px;
+  --font: 'Space Grotesk', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background:
+    radial-gradient(38rem 38rem at 50% 45%, rgba(168,255,41,.22), rgba(168,255,41,.08) 24%, rgba(0,0,0,0) 52%),
+    radial-gradient(18rem 18rem at 68% 68%, rgba(168,255,41,.14), rgba(0,0,0,0) 60%),
+    radial-gradient(16rem 16rem at 30% 72%, rgba(168,255,41,.08), rgba(0,0,0,0) 62%),
+    linear-gradient(180deg, #030507 0%, #06090b 45%, #040607 100%);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before {
+  content:"";
+  position: fixed;
+  inset:-10%;
+  pointer-events:none;
+  background:
+    radial-gradient(20rem 20rem at 52% 50%, rgba(183,255,42,.20), rgba(183,255,42,0) 68%),
+    radial-gradient(14rem 14rem at 70% 62%, rgba(183,255,42,.08), rgba(183,255,42,0) 70%);
+  filter: blur(22px);
+  animation: pulseGlow 8s ease-in-out infinite alternate;
+}
+@keyframes pulseGlow {
+  from { transform: translate3d(-1%, -1%, 0) scale(1); opacity:.78; }
+  to   { transform: translate3d(1%, 2%, 0) scale(1.06); opacity:1; }
+}
+.wrapper { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+.container { width:min(1180px, calc(100% - 32px)); margin:0 auto; }
+header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:28px 0 14px;
+}
+.logo { color:#fff; text-decoration:none; font-size:2rem; font-weight:700; letter-spacing:-.04em; }
+.logo span { color:var(--lime); }
+nav { display:flex; gap:28px; }
+nav a, .minor-link { color:var(--text); opacity:.92; text-decoration:none; font-size:1.05rem; }
+nav a:hover, .minor-link:hover { opacity:1; color:var(--lime); }
+.header-actions { display:flex; align-items:center; gap:16px; }
+.btn, .btn-outline {
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  min-height:58px; padding:0 28px; border-radius:999px; text-decoration:none;
+  font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:.98rem;
+  transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.btn:hover, .btn-outline:hover { transform: translateY(-1px); }
+.btn {
+  color:#0a0d07;
+  background: linear-gradient(180deg, #c9ff55 0%, #abf012 55%, #87d700 100%);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.05) inset,
+    0 0 22px rgba(183,255,42,.30),
+    0 8px 28px rgba(113,191,0,.28);
+}
+.btn-outline {
+  color:#fff; border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.03);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+}
+.hero {
+  flex:1; display:grid; place-items:center; padding:34px 0 40px;
+}
+.hero-grid { display:grid; grid-template-columns: 1.1fr .9fr; gap:36px; align-items:center; }
+.eyebrow { color:var(--lime); text-transform:uppercase; letter-spacing:.16em; font-size:.82rem; font-weight:700; }
+h1 { margin:.25em 0 .28em; font-size: clamp(3.8rem, 8vw, 7rem); line-height:.90; letter-spacing:-.06em; }
+.lead { max-width:38rem; color:var(--muted); font-size:1.12rem; line-height:1.6; }
+.cta-row { display:flex; gap:16px; flex-wrap:wrap; margin-top:30px; }
+.visual {
+  position:relative; min-height:560px; display:grid; place-items:center;
+}
+.card {
+  position:absolute; width:min(92%, 520px); border-radius:30px; padding:26px 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+.card.fade { opacity:.34; filter:saturate(.82); }
+.card.top { top:24px; left:14px; transform: rotate(-4deg); }
+.card.bottom { bottom:30px; left:-18px; transform: rotate(2deg); }
+.card.center {
+  position:relative; inset:auto; width:min(88%, 470px); z-index:2;
+  background: linear-gradient(180deg, rgba(18,22,18,.55), rgba(11,14,12,.46));
+  border-color: rgba(183,255,42,.10);
+}
+.badge {
+  display:inline-flex; align-items:center; gap:12px; padding:14px 18px;
+  border-radius:22px; background: rgba(23, 28, 24, .66);
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff; font-weight:700; margin:16px 0 20px;
+}
+.badge .flag {
+  width:44px; height:44px; border-radius:14px; display:grid; place-items:center;
+  background: rgba(255,255,255,.08); color:#dce7d4; font-size:1.1rem;
+}
+.card-title { font-size:.92rem; text-transform:uppercase; letter-spacing:.12em; color:rgba(255,255,255,.68); margin-bottom:18px; }
+.match { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; }
+.team { font-size:1.95rem; font-weight:700; letter-spacing:-.04em; }
+.meta, .small { color:var(--muted); }
+.price-pill {
+  min-width:112px; text-align:center; padding:18px 14px; border-radius:18px;
+  background: rgba(0,0,0,.52); font-weight:700; font-size:2rem;
+}
+.section { padding:24px 0 64px; }
+.grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+.panel {
+  padding:24px; background: var(--panel); border:1px solid var(--border); border-radius:24px;
+  box-shadow: var(--shadow);
+}
+.panel h3 { margin:.1em 0 .35em; font-size:1.35rem; }
+.panel p { margin:0; color:var(--muted); line-height:1.6; }
+.footer {
+  border-top:1px solid rgba(255,255,255,.06); padding:22px 0 30px; margin-top:auto;
+}
+.footer-row { display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.footer-links { display:flex; gap:22px; flex-wrap:wrap; }
+.kicker { color:var(--muted); font-size:.96rem; }
+.back-link { display:inline-flex; margin:18px 0 8px; color:var(--muted); text-decoration:none; }
+.back-link:hover { color:var(--lime); }
+.page-card { padding:36px; border-radius:30px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow); }
+.list { display:grid; gap:14px; margin-top:20px; }
+.list-item { padding:18px 20px; border-radius:20px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); }
+.form { display:grid; gap:14px; max-width:520px; }
+.input {
+  width:100%; min-height:58px; padding:0 18px; border-radius:18px; border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05); color:#fff; font:inherit;
+}
+@media (max-width: 900px) {
+  nav, .header-actions .minor-link { display:none; }
+  .hero-grid { grid-template-columns: 1fr; gap:24px; }
+  .visual { min-height:520px; }
+  h1 { font-size: clamp(3rem, 18vw, 5.7rem); }
+  .grid-3 { grid-template-columns:1fr; }
+  header { padding-top:20px; }
+}
+@media (max-width: 640px) {
+  .container { width:min(100% - 22px, 100%); }
+  .btn, .btn-outline { min-height:56px; width:100%; }
+  .cta-row { display:grid; grid-template-columns:1fr; }
+  .card.top { left:6px; top:6px; }
+  .card.bottom { left:-10px; bottom:8px; }
+  .card.center { width:92%; }
+  .page-card { padding:26px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="container">
+    <header>
+      <a class="logo" href="index.html">WASABI<span>.bet</span></a>
+      <nav>
+        <a href="sports.html">Sports</a>
+        <a href="casino.html">Casino</a>
+        <a href="promos.html">Promos</a>
+      </nav>
+      <div class="header-actions">
+        <a class="minor-link" href="login.html">Login</a>
+        <a class="btn" href="signup.html">Sign Up</a>
+      </div>
+    </header>
+
+        <a class="back-link" href="index.html">← Back to home</a>
+        <main class="section">
+          <div class="page-card">
+            <div class="eyebrow">Account</div>
+            <h1 style="font-size:clamp(2.6rem,7vw,4.4rem);line-height:.98;">Login</h1>
+            <p class="lead">Sign in to review picks, promotions, and saved betslips.</p>
+            <div class="form">
+              <input class="input" placeholder="Email" />
+              <input class="input" placeholder="Password" type="password" />
+              
+              <a class="btn" href="get-started.html">Login</a>
+            </div>
+          </div>
+        </main>
+        
+    <div class="footer">
+      <div class="footer-row">
+        <div class="kicker">18+ • Part of CasinoAssembly.com</div>
+        <div class="footer-links">
+          <a class="minor-link" href="terms.html">Terms and Conditions</a>
+          <a class="minor-link" href="responsible-gaming.html">Play Responsibly</a>
+          <a class="minor-link" href="coming-soon.html">More Markets</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
